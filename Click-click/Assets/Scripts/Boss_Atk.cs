@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Boss_Atk : MonoBehaviour {
     public float HP_Max;
+    public int TimeTotal;
+    [System.NonSerialized]
     public int lastTime;
-    public static float timer;
+    private float timer;
     public Hero_Date hero;
     private bool GameStop=false;
     private void Start()
     {
+        lastTime = TimeTotal;
         hero = GetComponent<Hero_Date>();
     }
     // Use this for initialization
@@ -33,24 +36,36 @@ public class Boss_Atk : MonoBehaviour {
     }
     public void Hero_Attack()
     {
-        HP_Max-=hero.atk;
-        hero.gold += (int)hero.atk;
-        hero.jewel += (int)hero.atk;
+        if (!GameStop)
+        {
+            HP_Max -= hero.atk;
+            hero.gold += (int)hero.atk;
+            hero.jewel += (int)hero.atk;
+        }
     }
     public void Skill_Attack()
     {
-        HP_Max -=hero.skill;
-        hero.gold += (int)hero.skill;
-        hero.jewel += (int)hero.skill;
+        if (!GameStop)
+        {
+            HP_Max -= hero.skill;
+            hero.gold += (int)hero.skill;
+            hero.jewel += (int)hero.skill;
+        }
     }
     public void Game_Defeat()
     {
-        print("defeat");
-        GameStop = true;
+        if (!GameStop)
+        {
+            print("defeat");
+            GameStop = true;
+        }
     }
     public void Game_Winner()
     {
-        print("winner");
-        GameStop = true;
+        if (!GameStop)
+        {
+            print("winner");
+            GameStop = true;
+        }
     }
 }
